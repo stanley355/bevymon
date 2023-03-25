@@ -15,4 +15,4 @@ opt-level = 3
 
 # Using Mold for fast compile
 [dependencies]
-bevy = "0.10.0"
+bevy = { version = "0.10.0", features = ["dynamic_linking"] }
