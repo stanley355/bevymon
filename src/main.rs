@@ -7,7 +7,7 @@ fn main() {
         .add_plugins(DefaultPlugins)
         .add_plugin(WorldInspectorPlugin::new())
         .add_startup_system(camera_setup)
-        .add_startup_system(player::setup_player)
+        .add_startup_system(player::setup)
         .run();
 }
 
