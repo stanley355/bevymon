@@ -1,3 +1,9 @@
+use bevy::prelude::*;
+use bevy_inspector_egui::quick::WorldInspectorPlugin;
+
 fn main() {
-    println!("Hello, world!");
+    App::new()
+        .add_plugins(DefaultPlugins)
+        .add_plugin(WorldInspectorPlugin::new())
+        .run();
 }
