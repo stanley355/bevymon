@@ -23,5 +23,5 @@ pub fn setup(
         texture_atlas: texture_atlas_handle,
         transform: Transform::from_scale(Vec3::new(3.0, 3.0, 0.0)),
         ..default()
-    });
+    }).insert(Player);
 }
