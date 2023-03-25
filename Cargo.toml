@@ -16,3 +16,4 @@ opt-level = 3
 # Using Mold for fast compile
 [dependencies]
 bevy = { version = "0.10.0", features = ["dynamic_linking"] }
+bevy-inspector-egui = "0.18.1"
