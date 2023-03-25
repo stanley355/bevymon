@@ -12,10 +12,8 @@ pub fn setup_player(
     let texture_atlas = TextureAtlas::new_empty(player_sprites, Vec2::new(0.0, 0.0));
     let texture_atlas_handle = texture_atlas_res.add(texture_atlas);
 
-    commands.spawn(
-        (SpriteSheetBundle {
-            texture_atlas: texture_atlas_handle,
-            ..default()
-        }),
-    );
+    commands.spawn(SpriteSheetBundle {
+        texture_atlas: texture_atlas_handle,
+        ..default()
+    });
 }
