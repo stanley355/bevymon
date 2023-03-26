@@ -7,7 +7,7 @@ pub struct Tile {
 }
 
 impl Tile {
-    fn tile_atlas_handle(
+    fn get_tile_atlas_handle(
         asset_server: Res<AssetServer>,
         mut texture_atlas_res: ResMut<Assets<TextureAtlas>>,
     ) -> Handle<TextureAtlas> {
@@ -28,12 +28,12 @@ impl Tile {
         asset_server: Res<AssetServer>,
         texture_atlas_res: ResMut<Assets<TextureAtlas>>,
     ) {
-        let texture_atlas = Self::tile_atlas_handle(asset_server, texture_atlas_res);
+        let texture_atlas = Self::get_tile_atlas_handle(asset_server, texture_atlas_res);
 
-        for n in 0..2 {
-            for m in 0..2 {
+        for m in -10..2 {
+            for n in -5..5 {
                 let transform = Transform {
-                    translation: Vec3::new(n as f32 * 31.0, m as f32 * 31.0, 0.0),
+                    translation: Vec3::new(m as f32 * 30.0, n as f32 * 30.0, 0.0),
                     scale: Vec3::new(2.0, 2.0, 0.0),
                     ..default()
                 };
