@@ -46,6 +46,7 @@ impl Player {
     }
 
     pub fn move_player(
+        keyboard_input: Res<Input<KeyCode>>,
         mut query: Query<(
             &mut Player,
             &mut PlayerSpriteIndices,
@@ -53,10 +54,17 @@ impl Player {
         )>,
     ) {
         for (_player, mut _sprite_indices, mut sprite) in &mut query {
-            if sprite.index < 11 {
-                sprite.index += 1;
-            } else {
-                sprite.index = 0;
+            if keyboard_input.pressed(KeyCode::Left) {
+                sprite.index = 4;
+            }
+            if keyboard_input.pressed(KeyCode::Right) {
+                sprite.index = 10;
+            }
+            if keyboard_input.pressed(KeyCode::Down) {
+                sprite.index = 1;
+            }
+            if keyboard_input.pressed(KeyCode::Up) {
+                sprite.index = 7;
             }
         }
     }
