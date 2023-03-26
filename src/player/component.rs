@@ -7,9 +7,10 @@ pub struct PlayerSpriteIndices {
 }
 
 const PLAYER_SPRITE_WIDTH: f32 = 20.0;
-const PLAYER_SPRITE_HEIGHT: f32 = 27.0;
+const PLAYER_SPRITE_HEIGHT: f32 = 28.0;
 const PLAYER_TILE_SIZE: Vec2 = Vec2::new(PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT);
 const PLAYER_SPRITE_OFFSET: Option<Vec2> = Some(Vec2::new(5.0, 4.0));
+const MOVEMENT_SPEED: f32 = 0.5;
 
 #[derive(Debug, Component)]
 pub struct Player;
@@ -37,7 +38,7 @@ impl Player {
                 SpriteSheetBundle {
                     texture_atlas: texture_atlas_handle,
                     sprite: TextureAtlasSprite::new(sprite_indices.first),
-                    transform: Transform::from_scale(Vec3::new(3.0, 3.0, 0.0)),
+                    transform: Transform::from_scale(Vec3::new(2.0, 2.0, 0.0)),
                     ..default()
                 },
                 sprite_indices,
@@ -51,16 +52,16 @@ impl Player {
     ) {
         for (_player, mut transform) in &mut query {
             if keyboard_input.pressed(KeyCode::A) {
-                transform.translation.x -= 1.0;
+                transform.translation.x -= MOVEMENT_SPEED;
             }
             if keyboard_input.pressed(KeyCode::D) {
-                transform.translation.x += 1.0;
+                transform.translation.x += MOVEMENT_SPEED;
             }
             if keyboard_input.pressed(KeyCode::S) {
-                transform.translation.y -= 1.0;
+                transform.translation.y -= MOVEMENT_SPEED;
             }
             if keyboard_input.pressed(KeyCode::W) {
-                transform.translation.y += 1.0;
+                transform.translation.y += MOVEMENT_SPEED;
             }
         }
     }
