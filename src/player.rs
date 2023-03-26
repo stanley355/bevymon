@@ -22,7 +22,7 @@ pub fn setup(
         player_sprites,
         Vec2::new(14.0, 21.0),
         7,
-        1,
+        3,
         None,
         Some(Vec2::new(25.0, 35.0)),
     );
@@ -35,7 +35,6 @@ pub fn setup(
             SpriteSheetBundle {
                 texture_atlas: texture_atlas_handle,
                 sprite: TextureAtlasSprite::new(animation_indices.first),
-                // transform: Transform::from_scale(Vec3::splat(6.0)),
                 transform: Transform::from_scale(Vec3::new(3.0, 3.0, 0.0)),
                 ..default()
             },
@@ -43,16 +42,6 @@ pub fn setup(
             AnimationTimer(Timer::from_seconds(0.1, TimerMode::Repeating)),
         ))
         .insert(Player);
-
-    // commands
-    //     .spawn(SpriteSheetBundle {
-    //         texture_atlas: texture_atlas_handle,
-    //         sprite: TextureAtlasSprite::new(animation_indices.first),
-    //         transform: Transform::from_scale(Vec3::new(3.0, 3.0, 0.0)),
-    //         ..default()
-    //     })
-    //     .insert(Player);
-    // commands.spawn(animation_indices);
 }
 
 pub fn move_player(
@@ -61,10 +50,14 @@ pub fn move_player(
         &AnimationIndices,
         &mut AnimationTimer,
         &mut TextureAtlasSprite,
+        &mut Handle<TextureAtlas>,
     )>,
 ) {
     // println!("hihiih");
-    for (indices, mut timer, mut sprite) in &mut query  {
+    for (indices, mut timer, mut sprite, atlas) in &mut query  {
+        // sprite.custom_size = Some(Vec2::new(10.0, 21.0));
+        // sprite.index = 18;
+        // println!("{:?}", atlas);
         timer.tick(time.delta());
         if timer.just_finished() {
             sprite.index = if sprite.index == indices.last {
