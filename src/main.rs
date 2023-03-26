@@ -4,7 +4,7 @@ mod player;
 
 fn main() {
     App::new()
-        .add_plugins(DefaultPlugins)
+        .add_plugins(DefaultPlugins.set(ImagePlugin::default_nearest())) // prevents blurry sprites
         .add_plugin(WorldInspectorPlugin::new())
         .add_startup_system(camera_setup)
         .add_plugin(player::PlayerPlugin)

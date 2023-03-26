@@ -45,33 +45,77 @@ impl Player {
             .insert(Player);
     }
 
-    pub fn move_player(
+    pub fn player_movement(
         keyboard_input: Res<Input<KeyCode>>,
-        mut query: Query<(&mut Player, &mut TextureAtlasSprite, &mut Transform)>,
+        mut query: Query<(&mut Player, &mut Transform)>,
     ) {
-        for (_player, mut sprite, mut transform) in &mut query {
+        for (_player, mut transform) in &mut query {
             if keyboard_input.pressed(KeyCode::A) {
+                transform.translation.x -= 1.0;
+            }
+            if keyboard_input.pressed(KeyCode::D) {
+                transform.translation.x += 1.0;
+            }
+            if keyboard_input.pressed(KeyCode::S) {
+                transform.translation.y -= 1.0;
+            }
+            if keyboard_input.pressed(KeyCode::W) {
+                transform.translation.y += 1.0;
+            }
+        }
+    }
+
+    pub fn animate_player_movement(
+        keyboard: Res<Input<KeyCode>>,
+        mut query: Query<(&mut Player, &mut TextureAtlasSprite)>,
+    ) {
+        for (_player, mut sprite) in &mut query {
+            // Left
+            if keyboard.pressed(KeyCode::A) {
                 if sprite.index < 5 {
                     sprite.index += 1;
                 } else {
                     sprite.index = 3;
                 }
-                transform.translation.x -= 1.0;
             }
-            if keyboard_input.just_released(KeyCode::A) {
+            if keyboard.just_released(KeyCode::A) {
                 sprite.index = 4
             }
-            if keyboard_input.pressed(KeyCode::D) {
-                sprite.index = 10;
-                transform.translation.x += 1.0;
+
+            // Right
+            if keyboard.pressed(KeyCode::D) {
+                if sprite.index < 11 {
+                    sprite.index += 1;
+                } else {
+                    sprite.index = 9;
+                }
             }
-            if keyboard_input.pressed(KeyCode::S) {
+            if keyboard.just_released(KeyCode::D) {
+                sprite.index = 10
+            }
+
+            // Down
+            if keyboard.pressed(KeyCode::S) {
+                if sprite.index < 2 {
+                    sprite.index += 1;
+                } else {
+                    sprite.index = 0;
+                }
+            }
+            if keyboard.just_released(KeyCode::S) {
                 sprite.index = 1;
-                transform.translation.y -= 1.0;
             }
-            if keyboard_input.pressed(KeyCode::W) {
+
+            // Up
+            if keyboard.pressed(KeyCode::W) {
+                if sprite.index < 8 {
+                    sprite.index += 1;
+                } else {
+                    sprite.index = 6
+                }
+            }
+            if keyboard.just_released(KeyCode::W) {
                 sprite.index = 7;
-                transform.translation.y += 1.0;
             }
         }
     }
