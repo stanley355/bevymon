@@ -9,6 +9,7 @@ fn main() {
         .add_plugins(DefaultPlugins.set(ImagePlugin::default_nearest())) // prevents blurry sprites
         .add_plugin(WorldInspectorPlugin::new())
         .add_startup_system(camera_setup)
+        .add_startup_system(tile::Tile::setup)
         .add_plugin(player::PlayerPlugin)
         .run();
 }
