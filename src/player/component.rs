@@ -6,6 +6,9 @@ pub struct PlayerSpriteIndices {
     pub last: usize,
 }
 
+#[derive(Component, Deref, DerefMut)]
+pub struct PlayerAnimationTimer(Timer);
+
 const PLAYER_SPRITE_WIDTH: f32 = 20.0;
 const PLAYER_SPRITE_HEIGHT: f32 = 28.0;
 const PLAYER_TILE_SIZE: Vec2 = Vec2::new(PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT);
@@ -32,6 +35,7 @@ impl Player {
         );
         let texture_atlas_handle = texture_atlas_res.add(texture_atlas);
         let sprite_indices = PlayerSpriteIndices { first: 1, last: 3 };
+        let animation_timer = PlayerAnimationTimer(Timer::from_seconds(0.1, TimerMode::Repeating));
 
         commands
             .spawn((
@@ -42,6 +46,7 @@ impl Player {
                     ..default()
                 },
                 sprite_indices,
+                animation_timer,
             ))
             .insert(Player);
     }
@@ -67,16 +72,23 @@ impl Player {
     }
 
     pub fn animate_player_movement(
+        time: Res<Time>,
         keyboard: Res<Input<KeyCode>>,
-        mut query: Query<(&mut Player, &mut TextureAtlasSprite)>,
+        mut query: Query<(
+            &mut Player,
+            &mut PlayerAnimationTimer,
+            &mut TextureAtlasSprite,
+        )>,
     ) {
-        for (_player, mut sprite) in &mut query {
-            // Left
+        for (_player, mut timer, mut sprite) in &mut query {
             if keyboard.pressed(KeyCode::A) {
-                if sprite.index < 5 {
-                    sprite.index += 1;
-                } else {
-                    sprite.index = 3;
+                timer.tick(time.delta());
+                if timer.just_finished() {
+                    if sprite.index < 5 {
+                        sprite.index += 1;
+                    } else {
+                        sprite.index = 3;
+                    }
                 }
             }
             if keyboard.just_released(KeyCode::A) {
@@ -85,10 +97,13 @@ impl Player {
 
             // Right
             if keyboard.pressed(KeyCode::D) {
-                if sprite.index < 11 {
-                    sprite.index += 1;
-                } else {
-                    sprite.index = 9;
+                timer.tick(time.delta());
+                if timer.just_finished() {
+                    if sprite.index < 11 {
+                        sprite.index += 1;
+                    } else {
+                        sprite.index = 9;
+                    }
                 }
             }
             if keyboard.just_released(KeyCode::D) {
@@ -97,10 +112,13 @@ impl Player {
 
             // Down
             if keyboard.pressed(KeyCode::S) {
-                if sprite.index < 2 {
-                    sprite.index += 1;
-                } else {
-                    sprite.index = 0;
+                timer.tick(time.delta());
+                if timer.just_finished() {
+                    if sprite.index < 2 {
+                        sprite.index += 1;
+                    } else {
+                        sprite.index = 0;
+                    }
                 }
             }
             if keyboard.just_released(KeyCode::S) {
@@ -109,10 +127,13 @@ impl Player {
 
             // Up
             if keyboard.pressed(KeyCode::W) {
-                if sprite.index < 8 {
-                    sprite.index += 1;
-                } else {
-                    sprite.index = 6
+                timer.tick(time.delta());
+                if timer.just_finished() {
+                    if sprite.index < 8 {
+                        sprite.index += 1;
+                    } else {
+                        sprite.index = 6
+                    }
                 }
             }
             if keyboard.just_released(KeyCode::W) {
