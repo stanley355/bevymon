@@ -1,11 +1,5 @@
 use bevy::prelude::*;
 
-#[derive(Component)]
-pub struct PlayerSpriteIndices {
-    pub first: usize,
-    pub last: usize,
-}
-
 #[derive(Component, Deref, DerefMut)]
 pub struct PlayerAnimationTimer(Timer);
 
@@ -34,18 +28,16 @@ impl Player {
             PLAYER_SPRITE_OFFSET,
         );
         let texture_atlas_handle = texture_atlas_res.add(texture_atlas);
-        let sprite_indices = PlayerSpriteIndices { first: 1, last: 3 };
         let animation_timer = PlayerAnimationTimer(Timer::from_seconds(0.1, TimerMode::Repeating));
 
         commands
             .spawn((
                 SpriteSheetBundle {
                     texture_atlas: texture_atlas_handle,
-                    sprite: TextureAtlasSprite::new(sprite_indices.first),
+                    sprite: TextureAtlasSprite::new(1),
                     transform: Transform::from_scale(Vec3::new(2.0, 2.0, 0.0)),
                     ..default()
                 },
-                sprite_indices,
                 animation_timer,
             ))
             .insert(Player);
