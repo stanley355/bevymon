@@ -51,8 +51,15 @@ impl Player {
     ) {
         for (_player, mut sprite, mut transform) in &mut query {
             if keyboard_input.pressed(KeyCode::A) {
-                sprite.index = 4;
+                if sprite.index < 5 {
+                    sprite.index += 1;
+                } else {
+                    sprite.index = 3;
+                }
                 transform.translation.x -= 1.0;
+            }
+            if keyboard_input.just_released(KeyCode::A) {
+                sprite.index = 4
             }
             if keyboard_input.pressed(KeyCode::D) {
                 sprite.index = 10;
