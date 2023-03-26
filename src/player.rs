@@ -1,73 +1,70 @@
 use bevy::prelude::*;
 
 #[derive(Component)]
-pub struct AnimationIndices {
+pub struct PlayerSpriteIndices {
     pub first: usize,
     pub last: usize,
 }
 
-#[derive(Component, Deref, DerefMut)]
-pub struct AnimationTimer(Timer);
-
-const BASE_X: f32 = 20.0;
-const BASE_Y: f32 = 27.0;
+const PLAYER_SPRITE_WIDTH: f32 = 20.0;
+const PLAYER_SPRITE_HEIGHT: f32 = 27.0;
+const PLAYER_TILE_SIZE: Vec2 = Vec2::new(PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT);
+const PLAYER_SPRITE_OFFSET: Option<Vec2> = Some(Vec2::new(5.0, 4.0));
 
 #[derive(Debug, Component)]
 pub struct Player;
 
-pub fn setup(
-    mut commands: Commands,
-    asset_server: Res<AssetServer>,
-    mut texture_atlas_res: ResMut<Assets<TextureAtlas>>,
-) {
-    let player_sprites: Handle<Image> = asset_server.load("player_sprites.png");
-    let texture_atlas = TextureAtlas::from_grid(
-        player_sprites,
-        Vec2::new(BASE_X, BASE_Y),
-        3,
-        4,
-        None,
-        Some(Vec2::new(5.0, 4.0)),
-    );
-    let texture_atlas_handle = texture_atlas_res.add(texture_atlas);
+impl Player {
+    pub fn setup(
+        mut commands: Commands,
+        asset_server: Res<AssetServer>,
+        mut texture_atlas_res: ResMut<Assets<TextureAtlas>>,
+    ) {
+        let player_sprites: Handle<Image> = asset_server.load("player_sprites.png");
+        let texture_atlas = TextureAtlas::from_grid(
+            player_sprites,
+            PLAYER_TILE_SIZE,
+            3,
+            4,
+            None,
+            PLAYER_SPRITE_OFFSET,
+        );
+        let texture_atlas_handle = texture_atlas_res.add(texture_atlas);
+        let sprite_indices = PlayerSpriteIndices { first: 1, last: 3 };
 
-    let animation_indices = AnimationIndices { first: 0, last: 3 };
+        commands
+            .spawn((
+                SpriteSheetBundle {
+                    texture_atlas: texture_atlas_handle,
+                    sprite: TextureAtlasSprite::new(sprite_indices.first),
+                    transform: Transform::from_scale(Vec3::new(3.0, 3.0, 0.0)),
+                    ..default()
+                },
+                sprite_indices,
+            ))
+            .insert(Player);
+    }
 
-    commands
-        .spawn((
-            SpriteSheetBundle {
-                texture_atlas: texture_atlas_handle,
-                sprite: TextureAtlasSprite::new(animation_indices.first),
-                transform: Transform::from_scale(Vec3::new(3.0, 3.0, 0.0)),
-                ..default()
-            },
-            animation_indices,
-            AnimationTimer(Timer::from_seconds(0.1, TimerMode::Repeating)),
-        ))
-        .insert(Player);
+    pub fn move_player(
+        mut query: Query<(
+            &mut Player,
+            &mut PlayerSpriteIndices,
+            &mut TextureAtlasSprite,
+        )>,
+    ) {
+        // println!("hihiih");
+        for (_player, mut _sprite_indices, mut sprite) in &mut query {
+            sprite.index = 0;
+        }
+    }
 }
 
-pub fn move_player(
-    time: Res<Time>,
-    mut query: Query<(
-        &AnimationIndices,
-        &mut AnimationTimer,
-        &mut TextureAtlasSprite,
-        &mut Handle<TextureAtlas>,
-    )>,
-) {
-    // println!("hihiih");
-    for (indices, mut timer, mut sprite, atlas) in &mut query {
-        // sprite.custom_size = Some(Vec2::new(10.0, 21.0));
-        // sprite.index = 18;
-        // println!("{:?}", atlas);
-        // timer.tick(time.delta());
-        // if timer.just_finished() {
-        //     sprite.index = if sprite.index == indices.last {
-        //         indices.first
-        //     } else {
-        sprite.index = 11;
-        //     };
-        // }
+#[derive(Debug)]
+pub struct PlayerPlugin;
+
+impl Plugin for PlayerPlugin {
+    fn build(&self, app: &mut App) {
+        app.add_startup_system(Player::setup)
+        .add_system(Player::move_player);
     }
 }
