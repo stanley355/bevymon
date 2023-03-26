@@ -52,19 +52,12 @@ impl Player {
             &mut TextureAtlasSprite,
         )>,
     ) {
-        // println!("hihiih");
         for (_player, mut _sprite_indices, mut sprite) in &mut query {
-            sprite.index = 0;
+            if sprite.index < 11 {
+                sprite.index += 1;
+            } else {
+                sprite.index = 0;
+            }
         }
-    }
-}
-
-#[derive(Debug)]
-pub struct PlayerPlugin;
-
-impl Plugin for PlayerPlugin {
-    fn build(&self, app: &mut App) {
-        app.add_startup_system(Player::setup)
-        .add_system(Player::move_player);
     }
 }
