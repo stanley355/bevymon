@@ -6,6 +6,9 @@ pub struct AnimationIndices {
     pub last: usize,
 }
 
+#[derive(Component, Deref, DerefMut)]
+pub struct AnimationTimer(Timer);
+
 #[derive(Debug, Component)]
 pub struct Player;
 
@@ -18,7 +21,7 @@ pub fn setup(
     let texture_atlas = TextureAtlas::from_grid(
         player_sprites,
         Vec2::new(14.0, 21.0),
-        1,
+        7,
         1,
         None,
         Some(Vec2::new(25.0, 35.0)),
@@ -27,15 +30,19 @@ pub fn setup(
 
     let animation_indices = AnimationIndices { first: 0, last: 6 };
 
-    commands.spawn((
-        SpriteSheetBundle {
-            texture_atlas: texture_atlas_handle,
-            sprite: TextureAtlasSprite::new(animation_indices.first),
-            transform: Transform::from_scale(Vec3::new(3.0, 3.0, 0.0)),
-            ..default()
-        },
-        animation_indices,
-    ));
+    commands
+        .spawn((
+            SpriteSheetBundle {
+                texture_atlas: texture_atlas_handle,
+                sprite: TextureAtlasSprite::new(animation_indices.first),
+                // transform: Transform::from_scale(Vec3::splat(6.0)),
+                transform: Transform::from_scale(Vec3::new(3.0, 3.0, 0.0)),
+                ..default()
+            },
+            animation_indices,
+            AnimationTimer(Timer::from_seconds(0.1, TimerMode::Repeating)),
+        ))
+        .insert(Player);
 
     // commands
     //     .spawn(SpriteSheetBundle {
@@ -49,22 +56,22 @@ pub fn setup(
 }
 
 pub fn move_player(
-    mut player_entity: Query<(&Player, &AnimationIndices, &mut TextureAtlasSprite)>,
+    time: Res<Time>,
+    mut query: Query<(
+        &AnimationIndices,
+        &mut AnimationTimer,
+        &mut TextureAtlasSprite,
+    )>,
 ) {
-    println!("hihiih");
-    for (indices, mut timer, mut sprite) in player_entity.iter_mut() {
-        sprite.index += 1;
-        println!("{:?}", sprite.index);
-        // timer.tick(time.delta());
-        // if timer.just_finished() {
-        //     sprite.index = if sprite.index == indices.last {
-        //         indices.first
-        //     } else {
-        //         sprite.index + 1
-        //     };
-        // }
+    // println!("hihiih");
+    for (indices, mut timer, mut sprite) in &mut query  {
+        timer.tick(time.delta());
+        if timer.just_finished() {
+            sprite.index = if sprite.index == indices.last {
+                indices.first
+            } else {
+                sprite.index + 1
+            };
+        }
     }
-    // for (_player, mut text_atlas_handle, mut sprite) in player_entity.iter_mut() {
-    //     println!("{:?}", _player)
-    // }
 }
