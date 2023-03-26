@@ -47,24 +47,24 @@ impl Player {
 
     pub fn move_player(
         keyboard_input: Res<Input<KeyCode>>,
-        mut query: Query<(
-            &mut Player,
-            &mut PlayerSpriteIndices,
-            &mut TextureAtlasSprite,
-        )>,
+        mut query: Query<(&mut Player, &mut TextureAtlasSprite, &mut Transform)>,
     ) {
-        for (_player, mut _sprite_indices, mut sprite) in &mut query {
-            if keyboard_input.pressed(KeyCode::Left) {
+        for (_player, mut sprite, mut transform) in &mut query {
+            if keyboard_input.pressed(KeyCode::A) {
                 sprite.index = 4;
+                transform.translation.x -= 1.0;
             }
-            if keyboard_input.pressed(KeyCode::Right) {
+            if keyboard_input.pressed(KeyCode::D) {
                 sprite.index = 10;
+                transform.translation.x += 1.0;
             }
-            if keyboard_input.pressed(KeyCode::Down) {
+            if keyboard_input.pressed(KeyCode::S) {
                 sprite.index = 1;
+                transform.translation.y -= 1.0;
             }
-            if keyboard_input.pressed(KeyCode::Up) {
+            if keyboard_input.pressed(KeyCode::W) {
                 sprite.index = 7;
+                transform.translation.y += 1.0;
             }
         }
     }
