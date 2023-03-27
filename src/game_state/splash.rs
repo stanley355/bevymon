@@ -1,6 +1,5 @@
-use bevy::prelude::*;
-
 use super::GameState;
+use bevy::prelude::*;
 
 #[derive(Debug)]
 pub struct SplashPlugin;
@@ -23,7 +22,7 @@ impl SplashScreen {
     fn start(mut commands: Commands, asset_server: Res<AssetServer>, query: Query<&Window>) {
         let window = query.single();
 
-        let splash_img = asset_server.load("splash.png");
+        let splash_img = asset_server.load("splash.gif");
         let size = Size::new(Val::Px(window.width() / 2.), Val::Px(window.height() / 2.));
         let margin = UiRect {
             left: Val::Percent(25.),
