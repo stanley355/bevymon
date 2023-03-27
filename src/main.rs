@@ -1,9 +1,11 @@
 use bevy::prelude::*;
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
+use game_state::GameState;
 
 mod player;
 mod tile;
 mod frame;
+mod game_state;
 
 fn main() {
     let win_plugin = WindowPlugin {
@@ -21,10 +23,9 @@ fn main() {
     App::new()
         .add_plugins(DefaultPlugins.set(win_plugin)) // prevent blurry sprite
         .add_plugin(WorldInspectorPlugin::new())
-        .add_startup_system(frame::Frame::frame_setup)
+        .add_state::<GameState>()
         .add_startup_system(camera_setup)
-        // .add_plugin(player::PlayerPlugin)
-        // .add_startup_system(tile::Tile::setup)
+        .add_plugin(game_state::splash::SplashPlugin)
         .run();
 }
 
