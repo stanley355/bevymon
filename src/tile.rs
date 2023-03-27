@@ -33,7 +33,7 @@ impl Tile {
         for m in -10..2 {
             for n in -5..5 {
                 let transform = Transform {
-                    translation: Vec3::new(m as f32 * 30.0, n as f32 * 30.0, 0.0),
+                    translation: Vec3::new(m as f32 * 30.0, n as f32 * 30.0, 10.0),
                     scale: Vec3::new(2.0, 2.0, 0.0),
                     ..default()
                 };

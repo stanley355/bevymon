@@ -57,6 +57,8 @@ impl Player {
                 planet,
             ))
             .insert(Player);
+
+            
     }
 
     pub fn move_player(
