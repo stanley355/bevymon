@@ -42,7 +42,7 @@ impl SplashScreen {
         };
 
         commands.spawn((bundle, SplashScreen));
-        commands.insert_resource(SplashTimer(Timer::from_seconds(3., TimerMode::Once)));
+        commands.insert_resource(SplashTimer(Timer::from_seconds(2., TimerMode::Once)));
     }
 
     fn countdown(
