@@ -1,4 +1,3 @@
-use bevy::core_pipeline::{clear_color::ClearColorConfig, core_2d::Camera2d};
 use bevy::prelude::*;
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
 
