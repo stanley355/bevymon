@@ -1,3 +1,4 @@
+use bevy::core_pipeline::{clear_color::ClearColorConfig, core_2d::Camera2d};
 use bevy::prelude::*;
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
 
@@ -15,5 +16,19 @@ fn main() {
 }
 
 fn camera_setup(mut commands: Commands) {
-    commands.spawn(Camera2dBundle::default());
+    let camera = Camera {
+        viewport: Some(bevy::render::camera::Viewport {
+            physical_position: UVec2::new(400, 0),
+            physical_size: UVec2::new(256, 256),
+            ..default()
+        }),
+        ..default()
+    };
+
+    let camera_bundle = Camera2dBundle {
+        camera,
+        ..default()
+    };
+
+    commands.spawn(camera_bundle);
 }
