@@ -5,10 +5,20 @@ mod player;
 mod tile;
 
 fn main() {
-    let image_plugin = ImagePlugin::default_nearest();
+    let win_plugin = WindowPlugin {
+        primary_window: Some(Window {
+            title: "Pokemon Rust".into(),
+            // Tells wasm to resize the window according to the available canvas
+            fit_canvas_to_parent: true,
+            // Tells wasm not to override default event handling, like F5, Ctrl+R etc.
+            prevent_default_event_handling: false,
+            ..default()
+        }),
+        ..default()
+    };
 
     App::new()
-        .add_plugins(DefaultPlugins.set(image_plugin)) // prevent blurry sprite
+        .add_plugins(DefaultPlugins.set(win_plugin)) // prevent blurry sprite
         .add_plugin(WorldInspectorPlugin::new())
         .add_startup_system(camera_setup)
         .add_plugin(player::PlayerPlugin)
