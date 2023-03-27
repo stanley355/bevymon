@@ -10,16 +10,16 @@ fn main() {
         .add_plugins(DefaultPlugins.set(ImagePlugin::default_nearest())) // prevents blurry sprites
         .add_plugin(WorldInspectorPlugin::new())
         .add_startup_system(camera_setup)
-        .add_startup_system(tile::Tile::setup)
         .add_plugin(player::PlayerPlugin)
+        .add_startup_system(tile::Tile::setup)
         .run();
 }
 
 fn camera_setup(mut commands: Commands) {
     let camera = Camera {
         viewport: Some(bevy::render::camera::Viewport {
-            physical_position: UVec2::new(400, 0),
-            physical_size: UVec2::new(256, 256),
+            physical_position: UVec2::new(500, 100),
+            physical_size: UVec2::new(1200, 800),
             ..default()
         }),
         ..default()

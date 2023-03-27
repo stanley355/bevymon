@@ -8,7 +8,7 @@ const PLAYER_SPRITE_OFFSET: Option<Vec2> = Some(Vec2::new(5.0, 4.0));
 const PLAYER_Z_INDEX: f32 = 2.0;
 const MOVEMENT_SPEED: f32 = 0.5;
 
-#[derive(Debug, Component)]
+#[derive(Debug, Component, Reflect)]
 pub struct Player;
 
 impl Player {
@@ -44,7 +44,7 @@ impl Player {
     ) {
         let texture_atlas_handle = Self::get_player_texture_atlas(asset_server, texture_atlas_res);
         let animation_timer = PlayerAnimationTimer::new();
-
+        let planet = Name::new("Player");
         commands
             .spawn((
                 SpriteSheetBundle {
@@ -54,6 +54,7 @@ impl Player {
                     ..default()
                 },
                 animation_timer,
+                planet,
             ))
             .insert(Player);
     }
