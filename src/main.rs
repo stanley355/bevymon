@@ -2,9 +2,9 @@ use bevy::prelude::*;
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
 use game_state::GameState;
 
-mod player;
-mod tile;
-mod frame;
+// mod player;
+// mod tile;
+// mod frame;
 mod game_state;
 
 fn main() {
