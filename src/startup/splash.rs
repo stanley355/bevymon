@@ -17,9 +17,33 @@ impl Plugin for SplashPlugin {
 pub struct SplashTimer(Timer);
 
 #[derive(Component, Debug)]
+pub struct SplashText;
+
+#[derive(Component, Debug)]
 pub struct SplashScreen;
 
 impl SplashScreen {
+    fn loading_text(asset_server: Res<AssetServer>, window: &Window) -> TextBundle {
+        let font: Handle<Font> = asset_server.load("fonts/poke-solid.ttf");
+
+        let text_style = TextStyle {
+            font,
+            font_size: 100.,
+            color: Color::WHITE,
+        };
+
+        let style = Style {
+            margin: UiRect {
+                top: Val::Px(window.height() * 0.8),
+                left: Val::Px(25.),
+                ..Default::default()
+            },
+            ..Default::default()
+        };
+
+        TextBundle::from_section("Loading...", text_style).with_style(style)
+    }
+
     fn start(mut commands: Commands, asset_server: Res<AssetServer>, query: Query<&Window>) {
         let window = query.single();
 
@@ -27,15 +51,16 @@ impl SplashScreen {
         let size = Size::new(Val::Px(window.width()), Val::Px(window.height()));
 
         let bundle = ImageBundle {
-            style: Style {
-                size,
-                ..default()
-            },
+            style: Style { size, ..default() },
             image: UiImage::new(splash_img),
             ..default()
         };
 
-        commands.spawn((bundle, SplashScreen));
+        let text = Self::loading_text(asset_server, window);
+
+        commands.spawn((bundle, SplashScreen)).with_children(|par| {
+            par.spawn((text, SplashText));
+        });
         commands.insert_resource(SplashTimer(Timer::from_seconds(2., TimerMode::Once)));
     }
 
@@ -50,8 +75,10 @@ impl SplashScreen {
         }
     }
 
-    pub fn despawn(mut commands: Commands, query: Query<(Entity, &SplashScreen)>) {
-        let screen = query.single();
+    pub fn despawn(mut commands: Commands, screen_query: Query<(Entity, &SplashScreen)>, text_query: Query<(Entity, &SplashText)>) {
+        let screen = screen_query.single();
+        let text = text_query.single();
         commands.get_entity(screen.0).unwrap().despawn();
+        commands.get_entity(text.0).unwrap().despawn();
     }
 }
