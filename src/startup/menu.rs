@@ -9,7 +9,7 @@ pub struct MenuPlugin;
 
 impl Plugin for MenuPlugin {
     fn build(&self, app: &mut App) {
-        app.add_system(MenuScreen::view.in_schedule(OnExit(StartupState::Splash)));
+        app.add_system(MenuScreen::view.in_schedule(OnEnter(StartupState::Menu)));
     }
 }
 
