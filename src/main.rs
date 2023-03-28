@@ -1,4 +1,4 @@
-use bevy::prelude::*;
+use bevy::{prelude::*, core_pipeline::clear_color::ClearColorConfig};
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
 // use game_state::GameState;
 
@@ -32,5 +32,14 @@ fn main() {
 }
 
 fn camera_setup(mut commands: Commands) {
-    commands.spawn(Camera2dBundle::default());
+    let bundle =     Camera2dBundle {
+        camera_2d: Camera2d {
+            // no "background color", we need to see the main camera's output
+            clear_color: ClearColorConfig::Custom(Color::BLACK),
+            ..default()
+        },
+        ..default()
+    };
+
+    commands.spawn(bundle);
 }
