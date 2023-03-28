@@ -11,6 +11,7 @@ pub enum StartupState {
     #[default]
     Splash,
     Menu,
+    InGame
 }
 
 #[derive(Debug)]
