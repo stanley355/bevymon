@@ -13,10 +13,10 @@ impl Plugin for SplashPlugin {
 }
 
 #[derive(Resource, Debug, Deref, DerefMut)]
-struct SplashTimer(Timer);
+pub struct SplashTimer(Timer);
 
 #[derive(Component, Debug)]
-struct SplashScreen;
+pub struct SplashScreen;
 
 impl SplashScreen {
     fn start(mut commands: Commands, asset_server: Res<AssetServer>, query: Query<&Window>) {
@@ -55,7 +55,7 @@ impl SplashScreen {
         }
     }
 
-    fn despawn(mut commands: Commands, query: Query<(Entity, &SplashScreen)>) {
+    pub fn despawn(mut commands: Commands, query: Query<(Entity, &SplashScreen)>) {
         let screen = query.single();
         commands.get_entity(screen.0).unwrap().despawn();
     }

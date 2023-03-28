@@ -1,4 +1,4 @@
-use super::{GameState, MenuState};
+use super::{GameState};
 use bevy::prelude::*;
 
 #[derive(Debug)]
@@ -6,7 +6,7 @@ pub struct MenuPlugin;
 
 impl Plugin for MenuPlugin {
     fn build(&self, app: &mut App) {
-        app.add_system(MenuScreen::view);
+        app.add_system(MenuScreen::view.in_schedule(OnExit(GameState::Splash)));
     }
 }
 
@@ -18,8 +18,6 @@ impl MenuScreen {
         mut commands: Commands,
         asset_server: Res<AssetServer>,
         query: Query<&Window>,
-        game_state: Res<State<GameState>>,
-        mut next_state: ResMut<NextState<GameState>>,
     ) {
         let window = query.single();
 
@@ -34,7 +32,6 @@ impl MenuScreen {
 
         let name = Name::new("menu_bg");
 
-        commands.spawn((bundle, name));
-        next_state.set(GameState::Menu);
+        commands.spawn((bundle, name)).insert(MenuScreen);
     }
 }

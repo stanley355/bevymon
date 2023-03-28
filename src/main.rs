@@ -26,7 +26,7 @@ fn main() {
         .add_state::<GameState>()
         .add_startup_system(camera_setup)
         .add_plugin(game_state::splash::SplashPlugin)
-        // .add_plugin(game_state::menu::MenuPlugin)
+        .add_plugin(game_state::menu::MenuPlugin)
         .run();
 }
 
