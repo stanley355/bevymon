@@ -22,7 +22,7 @@ impl SplashScreen {
     fn start(mut commands: Commands, asset_server: Res<AssetServer>, query: Query<&Window>) {
         let window = query.single();
 
-        let splash_img = asset_server.load("splash.gif");
+        let splash_img = asset_server.load("images/splash.png");
         let size = Size::new(Val::Px(window.width() / 2.), Val::Px(window.height() / 2.));
         let margin = UiRect {
             left: Val::Percent(25.),
@@ -51,7 +51,7 @@ impl SplashScreen {
     ) {
         let timer_tick = timer.tick(time.delta());
         if timer_tick.finished() {
-            game_state.set(GameState::Menu);
+            game_state.set(GameState::MenuScreen);
         }
     }
 

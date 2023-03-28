@@ -8,6 +8,7 @@ pub mod menu;
 pub enum GameState {
     #[default]
     Splash,
+    MenuScreen,
     Menu,
     Game,
 }
