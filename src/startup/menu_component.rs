@@ -17,7 +17,7 @@ impl MenuComponent {
         return bundle;
     }
 
-    pub fn text_wrap(window: &Window) -> NodeBundle {
+    pub fn logo_wrap(window: &Window) -> NodeBundle {
         NodeBundle {
             style: Style {
                 flex_direction: FlexDirection::Column,
