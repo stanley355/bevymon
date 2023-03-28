@@ -19,11 +19,18 @@ impl MenuScreen {
     fn view(mut commands: Commands, asset_server: Res<AssetServer>, query: Query<&Window>) {
         let window = query.single();
 
-        let background = MenuComponent::background(&asset_server, window);
-        let bg_name = Name::new("menu_bg");
+        let bg_image = MenuComponent::background(&asset_server, window);
+        let bg_name = Name::new("menu_screen");
 
-        let batch = vec![(background, bg_name)];
+        let text_wrap = MenuComponent::text_wrap(window);
+        let logo = MenuComponent::logo(&asset_server);
+        let title = MenuComponent::title(&asset_server);
 
-        commands.spawn_batch(batch);
+        commands.spawn((bg_image, bg_name)).with_children(|parent| {
+            parent.spawn(text_wrap).with_children(|parent| {
+                parent.spawn(logo);
+                parent.spawn(title);
+            });
+        });
     }
 }

@@ -24,17 +24,11 @@ impl SplashScreen {
         let window = query.single();
 
         let splash_img = asset_server.load("images/splash.png");
-        let size = Size::new(Val::Px(window.width() / 2.), Val::Px(window.height() / 2.));
-        let margin = UiRect {
-            left: Val::Percent(25.),
-            top: Val::Px(window.height() / 4.),
-            ..Default::default()
-        };
+        let size = Size::new(Val::Px(window.width()), Val::Px(window.height()));
 
         let bundle = ImageBundle {
             style: Style {
                 size,
-                margin,
                 ..default()
             },
             image: UiImage::new(splash_img),
