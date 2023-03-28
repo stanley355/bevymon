@@ -16,13 +16,25 @@ impl MenuComponent {
 
         return bundle;
     }
-
-    pub fn logo_wrap(window: &Window) -> NodeBundle {
+    
+    pub fn text_wrap() -> NodeBundle {
         NodeBundle {
             style: Style {
                 flex_direction: FlexDirection::Column,
                 align_items: AlignItems::Center,
-                margin: UiRect::left(Val::Px(window.width() / 4.)),
+                justify_content: JustifyContent::SpaceBetween,
+                margin: UiRect::left(Val::Percent(20.)),
+                ..default()
+            },
+            ..default()
+        }
+    }
+
+    pub fn logo_wrap() -> NodeBundle {
+        NodeBundle {
+            style: Style {
+                flex_direction: FlexDirection::Column,
+                align_items: AlignItems::Center,
                 ..default()
             },
             ..default()
@@ -48,6 +60,18 @@ impl MenuComponent {
             TextStyle {
                 font: font.clone(),
                 font_size: 120.0,
+                color: Color::WHITE,
+            },
+        )
+    }
+
+    pub fn cta_text(asset_server: &Res<AssetServer>) -> TextBundle {
+        let font: Handle<Font> = asset_server.load("fonts/april-easter.ttf");
+        TextBundle::from_section(
+            "Press Enter to join War",
+            TextStyle {
+                font: font.clone(),
+                font_size: 50.0,
                 color: Color::WHITE,
             },
         )
