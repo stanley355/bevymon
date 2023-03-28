@@ -1,4 +1,5 @@
 use bevy::prelude::*;
+use bevy_tweening::Animator;
 
 use super::menu_component::MenuComponent;
 use super::StartupState;
@@ -29,6 +30,8 @@ impl MenuScreen {
         let title = MenuComponent::title(&asset_server);
         let cta_text = MenuComponent::cta_text(&asset_server);
 
+        let cta_animation = Animator::new(MenuComponent::cta_text_animation());
+
         commands
             .spawn((bg_image, bg_name))
             .with_children(|bg_parent| {
@@ -40,7 +43,7 @@ impl MenuScreen {
                             parent.spawn(title);
                         });
 
-                        text_wrap_parent.spawn(cta_text);
+                        text_wrap_parent.spawn((cta_text, cta_animation));
                     });
             });
     }

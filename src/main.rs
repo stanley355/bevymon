@@ -1,11 +1,7 @@
 use bevy::{prelude::*, core_pipeline::clear_color::ClearColorConfig};
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
-// use game_state::GameState;
+use bevy_tweening::TweeningPlugin;
 
-// mod player;
-// mod tile;
-// mod frame;
-// mod game_state;
 mod startup;
 
 fn main() {
@@ -25,6 +21,7 @@ fn main() {
         .add_plugins(DefaultPlugins.set(win_plugin)) // prevent blurry sprite
         .add_plugin(WorldInspectorPlugin::new())
         .add_startup_system(camera_setup)
+        .add_plugin(TweeningPlugin)
         .add_plugins(startup::StartupPluginGroup)
         // .add_plugin(game_state::splash::SplashPlugin)
         // .add_plugin(game_state::menu::MenuPlugin)

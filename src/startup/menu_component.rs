@@ -1,4 +1,7 @@
+use std::time::Duration;
+
 use bevy::prelude::*;
+use bevy_tweening::{lens::*, *};
 
 #[derive(Debug, Component)]
 pub struct MenuComponent;
@@ -16,7 +19,7 @@ impl MenuComponent {
 
         return bundle;
     }
-    
+
     pub fn text_wrap() -> NodeBundle {
         NodeBundle {
             style: Style {
@@ -63,6 +66,18 @@ impl MenuComponent {
                 color: Color::WHITE,
             },
         )
+    }
+
+    pub fn cta_text_animation() -> Tween<Text> {
+        Tween::new(
+            EaseFunction::QuadraticInOut,
+            Duration::from_secs(1),
+            TextColorLens {
+                start: Color::NONE,
+                end: Color::WHITE,
+                section: 0,
+            },
+        ).with_repeat_count(RepeatCount::Infinite)
     }
 
     pub fn cta_text(asset_server: &Res<AssetServer>) -> TextBundle {
