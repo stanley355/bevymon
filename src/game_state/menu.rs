@@ -1,4 +1,4 @@
-use super::GameState;
+use super::{GameState, MenuState};
 use bevy::prelude::*;
 
 #[derive(Debug)]
@@ -6,7 +6,7 @@ pub struct MenuPlugin;
 
 impl Plugin for MenuPlugin {
     fn build(&self, app: &mut App) {
-        app.add_system(MenuScreen::view.in_schedule(OnEnter(GameState::MenuScreen)));
+        app.add_system(MenuScreen::view);
     }
 }
 
@@ -21,23 +21,20 @@ impl MenuScreen {
         game_state: Res<State<GameState>>,
         mut next_state: ResMut<NextState<GameState>>,
     ) {
-        println!("{:?}", game_state.0);
-        if game_state.0 == GameState::MenuScreen {
-            let window = query.single();
+        let window = query.single();
 
-            let background = asset_server.load("images/war_bg.png");
-            let size = Size::new(Val::Px(window.width()), Val::Px(window.height()));
+        let background = asset_server.load("images/war_bg.png");
+        let size = Size::new(Val::Px(window.width()), Val::Px(window.height()));
 
-            let bundle = ImageBundle {
-                style: Style { size, ..default() },
-                image: UiImage::new(background),
-                ..default()
-            };
+        let bundle = ImageBundle {
+            style: Style { size, ..default() },
+            image: UiImage::new(background),
+            ..default()
+        };
 
-            let name = Name::new("menu_bg");
+        let name = Name::new("menu_bg");
 
-            commands.spawn((bundle, name));
-            next_state.set(GameState::Menu);
-        }
+        commands.spawn((bundle, name));
+        next_state.set(GameState::Menu);
     }
 }

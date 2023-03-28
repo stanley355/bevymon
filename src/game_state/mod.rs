@@ -8,7 +8,13 @@ pub mod menu;
 pub enum GameState {
     #[default]
     Splash,
-    MenuScreen,
     Menu,
     Game,
+}
+
+#[derive(Clone, Copy, Default, Eq, PartialEq, Debug, Hash, States)]
+pub enum MenuState {
+    #[default]
+    MenuRendering,
+    MenuMain,
 }

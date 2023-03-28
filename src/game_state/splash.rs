@@ -51,7 +51,7 @@ impl SplashScreen {
     ) {
         let timer_tick = timer.tick(time.delta());
         if timer_tick.finished() {
-            game_state.set(GameState::MenuScreen);
+            game_state.set(GameState::Menu);
         }
     }
 
