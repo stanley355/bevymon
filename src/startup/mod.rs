@@ -14,7 +14,7 @@ pub struct StartupPluginGroup;
 impl PluginGroup for StartupPluginGroup {
     fn build(self) -> PluginGroupBuilder {
         PluginGroupBuilder::start::<Self>()
-            .add(splash::SplashPlugin)
+            .add(splash::plugin::SplashPlugin)
             .add(menu::MenuPlugin)
     }
 }

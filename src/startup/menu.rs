@@ -2,7 +2,7 @@ use bevy::prelude::*;
 use bevy_tweening::Animator;
 
 use super::menu_component::MenuComponent;
-use super::StartupState;
+use super::state::StartupState;
 
 #[derive(Debug)]
 pub struct MenuPlugin;
