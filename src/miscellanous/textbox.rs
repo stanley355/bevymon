@@ -1,15 +1,26 @@
 use bevy::prelude::*;
 
+#[derive(Debug)]
+pub struct TextboxPlugin;
+
+impl Plugin for TextboxPlugin {
+    fn build(&self, app: &mut App) {
+        let textbox = TextBox::new(false, vec!["".to_string()]);
+        app.insert_resource(textbox);
+    }
+}
+
 const TEXTBOX_TILE_SIZE: Vec2 = Vec2::new(255., 50.);
 
 #[derive(Debug, Resource)]
 pub struct TextBox {
+    spawn: bool,
     texts: Vec<String>,
 }
 
 impl TextBox {
-    pub fn new(texts: Vec<String>) -> TextBox {
-        TextBox { texts }
+    pub fn new(spawn: bool, texts: Vec<String>) -> TextBox {
+        TextBox { spawn, texts }
     }
 
     pub fn bundle(
