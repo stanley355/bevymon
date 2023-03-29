@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use super::component::*;
+use super::components::*;
 use super::resource::ChatResource;
 
 #[derive(Debug)]
