@@ -10,7 +10,7 @@ impl Plugin for TextboxPlugin {
     }
 }
 
-const TEXTBOX_TILE_SIZE: Vec2 = Vec2::new(255., 50.);
+const TEXTBOX_TILE_SIZE: Vec2 = Vec2::new(255., 48.);
 
 #[derive(Debug, Resource)]
 pub struct TextBox {
@@ -36,7 +36,7 @@ impl TextBox {
 
         SpriteSheetBundle {
             texture_atlas: texture_atlas_handle,
-            sprite: TextureAtlasSprite::new(1),
+            sprite: TextureAtlasSprite::new(2),
             ..default()
         }
     }

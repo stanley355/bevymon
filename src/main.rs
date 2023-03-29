@@ -26,6 +26,7 @@ fn main() {
         .add_startup_system(camera_setup)
         .add_plugin(TweeningPlugin)
         .add_plugins(startup::StartupPluginGroup)
+        .add_plugins(story::StoryPluginGroup)
         // .add_plugin(game_state::splash::SplashPlugin)
         // .add_plugin(game_state::menu::MenuPlugin)
         .run();
