@@ -1,4 +1,5 @@
-use bevy::{prelude::*, core_pipeline::clear_color::ClearColorConfig};
+use bevy::render::camera::Viewport;
+use bevy::{core_pipeline::clear_color::ClearColorConfig, prelude::*};
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
 use bevy_tweening::TweeningPlugin;
 
@@ -28,11 +29,23 @@ fn main() {
         .run();
 }
 
-fn camera_setup(mut commands: Commands) {
-    let bundle =     Camera2dBundle {
+fn camera_setup(mut commands: Commands, query: Query<&Window>) {
+    let window = query.single();
+    let win_width = window.physical_width() as u32;
+    let win_height = window.physical_height() as u32;
+
+    let camera = Camera {
+        viewport: Some(Viewport {
+            physical_size: UVec2::new(win_width, win_height),
+            ..default()
+        }),
+        ..Default::default()
+    };
+
+    let bundle = Camera2dBundle {
+        camera,
         camera_2d: Camera2d {
-            // no "background color", we need to see the main camera's output
-            clear_color: ClearColorConfig::Custom(Color::BLACK),
+            clear_color: ClearColorConfig::Custom(Color::WHITE),
             ..default()
         },
         ..default()
