@@ -3,13 +3,15 @@ use bevy_tweening::Animator;
 
 use super::menu_component::MenuComponent;
 use super::StartupState;
+use crate::story::StoryState;
 
 #[derive(Debug)]
 pub struct MenuPlugin;
 
 impl Plugin for MenuPlugin {
     fn build(&self, app: &mut App) {
-        app.add_system(MenuScreen::view.in_schedule(OnEnter(StartupState::Menu)))
+        app.add_state::<StoryState>()
+            .add_system(MenuScreen::view.in_schedule(OnEnter(StartupState::Menu)))
             .add_system(MenuScreen::enter_game.in_set(OnUpdate(StartupState::Menu)))
             .add_system(MenuScreen::cleanup.in_schedule(OnExit(StartupState::Menu)));
     }
@@ -45,24 +47,28 @@ impl MenuScreen {
                             parent.spawn(title);
                         });
 
-                        text_wrap_parent
-                            .spawn((cta_text, cta_animation));
+                        text_wrap_parent.spawn((cta_text, cta_animation));
                     });
             });
     }
 
     fn enter_game(
         keyboard_input: Res<Input<KeyCode>>,
-        mut game_state: ResMut<NextState<StartupState>>,
+        mut startup_state: ResMut<NextState<StartupState>>,
     ) {
         if keyboard_input.pressed(KeyCode::Return) {
-            game_state.set(StartupState::InGame);
+            startup_state.set(StartupState::InGame);
         }
     }
 
-    fn cleanup(mut commands: Commands, query: Query<Entity, With<MenuScreen>>) {
+    fn cleanup(
+        mut commands: Commands,
+        query: Query<Entity, With<MenuScreen>>,
+        mut story_state: ResMut<NextState<StoryState>>,
+    ) {
         let screen = query.single();
         commands.entity(screen).despawn_descendants();
         commands.entity(screen).despawn();
+        story_state.set(StoryState::NewGame);
     }
 }
