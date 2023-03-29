@@ -7,14 +7,14 @@ pub struct TextboxPlugin;
 impl Plugin for TextboxPlugin {
     fn build(&self, app: &mut App) {
         let dummy = vec![
-            "At the start there's creation...But where does creation comes from?".to_string(),
+            "At the start there's creation...".to_string(),
             "But where does the creation comes from?".to_string(),
         ];
         let textbox = TextBox::new(true, dummy);
 
         app.insert_resource(textbox)
-            .add_startup_system(TextBox::spawn);
-        // .add_system(TextBox::detect_change);
+            .add_startup_system(TextBox::spawn)
+        .add_system(TextBox::detect_change);
         // TODO: Activate this code once functionality done
         // .add_system(TextBox::spawn.in_schedule(OnEnter(StartupState::InGame)));
     }
@@ -106,7 +106,7 @@ impl TextBox {
             let textbox = TextBox::sprite_bundle(&asset_server, texture_atlas_res, window);
 
             let textvalue_name = Name::new("TextboxValue");
-            let text_value = TextBox::text_value(&asset_server, &textbox_res.texts[0], window);
+            let text_value = TextBox::text_value(&asset_server, &textbox_res.texts[textbox_res.index], window);
 
             commands.spawn((textbox, textbox_name));
             commands.spawn((text_value, textvalue_name));
