@@ -6,12 +6,12 @@ pub struct TextboxPlugin;
 
 impl Plugin for TextboxPlugin {
     fn build(&self, app: &mut App) {
-        let textbox = TextBox::new(false, vec!["".to_string()]);
-        // TODO: Activate this code once functionality done
-        // app.insert_resource(textbox)
-        //     .add_system(TextBox::spawn.in_schedule(OnEnter(StartupState::InGame)));
+        let textbox = TextBox::new(true, vec!["".to_string()]);
 
-        app.add_startup_system(TextBox::spawn);
+        app.insert_resource(textbox)
+            .add_startup_system(TextBox::spawn);
+        // TODO: Activate this code once functionality done
+        //     .add_system(TextBox::spawn.in_schedule(OnEnter(StartupState::InGame)));
     }
 }
 
@@ -53,15 +53,18 @@ impl TextBox {
     }
 
     pub fn spawn(
+        mut textbox_res: ResMut<TextBox>,
         mut commands: Commands,
         asset_server: Res<AssetServer>,
         texture_atlas_res: ResMut<Assets<TextureAtlas>>,
         window_query: Query<&Window>,
     ) {
-        let window = window_query.single();
+        if textbox_res.spawn {
+            let window = window_query.single();
 
-        let textbox_name = Name::new("Textbox");
-        let textbox = TextBox::bundle(asset_server, texture_atlas_res, window);
-        commands.spawn((textbox_name, textbox));
+            let textbox_name = Name::new("Textbox");
+            let textbox = TextBox::bundle(asset_server, texture_atlas_res, window);
+            commands.spawn((textbox_name, textbox));
+        }
     }
 }
