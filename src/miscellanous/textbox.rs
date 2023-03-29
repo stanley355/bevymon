@@ -33,10 +33,16 @@ impl TextBox {
         let texture_atlas =
             TextureAtlas::from_grid(textbox_sprites, TEXTBOX_TILE_SIZE, 2, 10, None, None);
         let texture_atlas_handle = texture_atlas_res.add(texture_atlas);
+        let transform = Transform {
+            translation: Vec3::new(0., window.height() / -3., 5.),
+            scale: Vec3::new(3., 3., 0.),
+            ..Default::default()
+        };
 
         SpriteSheetBundle {
             texture_atlas: texture_atlas_handle,
             sprite: TextureAtlasSprite::new(2),
+            transform,
             ..default()
         }
     }
