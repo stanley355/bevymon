@@ -8,7 +8,7 @@ pub struct NewGamePlugin;
 
 impl Plugin for NewGamePlugin {
     fn build(&self, app: &mut App) {
-        app.add_startup_system(NewGame::start);
+        // app.add_startup_system(NewGame::start);
         // app.add_system(NewGame::start.in_schedule(OnEnter(StoryState::NewGame)));
     }
 }
@@ -23,10 +23,6 @@ impl NewGame {
         texture_atlas_res: ResMut<Assets<TextureAtlas>>,
         window_query: Query<&Window>,
     ) {
-        let window = window_query.single();
         
-        let textbox_name = Name::new("Textbox");
-        let textbox = TextBox::bundle(asset_server, texture_atlas_res, window);
-        commands.spawn((textbox, textbox_name));
     }
 }
