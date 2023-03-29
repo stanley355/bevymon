@@ -2,7 +2,7 @@ use bevy::prelude::*;
 use bevy_tweening::Animator;
 
 use crate::startup::state::StartupState;
-use super::components::MenuComponent;
+use super::components::MenuScreenComponent;
 
 #[derive(Debug, Component)]
 pub struct MenuScreen;
@@ -11,17 +11,17 @@ impl MenuScreen {
     pub fn new(mut commands: Commands, asset_server: Res<AssetServer>, query: Query<&Window>) {
         let window = query.single();
 
-        let bg_image = MenuComponent::background(&asset_server, window);
+        let bg_image = MenuScreenComponent::background(&asset_server, window);
         let bg_name = Name::new("menu_screen");
 
-        let text_wrap = MenuComponent::text_wrap();
+        let text_wrap = MenuScreenComponent::text_wrap();
 
-        let logo_wrap = MenuComponent::logo_wrap();
-        let logo = MenuComponent::logo(&asset_server);
-        let title = MenuComponent::title(&asset_server);
-        let cta_text = MenuComponent::cta_text(&asset_server);
+        let logo_wrap = MenuScreenComponent::logo_wrap();
+        let logo = MenuScreenComponent::logo(&asset_server);
+        let title = MenuScreenComponent::title(&asset_server);
+        let cta_text = MenuScreenComponent::cta_text(&asset_server);
 
-        let cta_animation = Animator::new(MenuComponent::cta_text_animation());
+        let cta_animation = Animator::new(MenuScreenComponent::cta_text_animation());
 
         commands
             .spawn((bg_image, bg_name, MenuScreen))

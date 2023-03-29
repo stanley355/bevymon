@@ -5,9 +5,9 @@ use bevy::prelude::*;
 use bevy_tweening::{lens::*, *};
 
 #[derive(Debug, Component)]
-pub struct MenuComponent;
+pub struct MenuScreenComponent;
 
-impl MenuComponent {
+impl MenuScreenComponent {
     pub fn background(asset_server: &Res<AssetServer>, window: &Window) -> ImageBundle {
         let background = asset_server.load("images/war_bg.png");
         let size = Size::new(Val::Px(window.width()), Val::Px(window.height()));
