@@ -1,25 +1,14 @@
 use bevy::prelude::*;
 use bevy_tweening::Animator;
 
-use super::menu_component::MenuComponent;
-use super::state::StartupState;
-
-#[derive(Debug)]
-pub struct MenuPlugin;
-
-impl Plugin for MenuPlugin {
-    fn build(&self, app: &mut App) {
-        app.add_system(MenuScreen::view.in_schedule(OnEnter(StartupState::Menu)))
-            .add_system(MenuScreen::enter_game.in_set(OnUpdate(StartupState::Menu)))
-            .add_system(MenuScreen::cleanup.in_schedule(OnExit(StartupState::Menu)));
-    }
-}
+use crate::startup::state::StartupState;
+use super::components::MenuComponent;
 
 #[derive(Debug, Component)]
 pub struct MenuScreen;
 
 impl MenuScreen {
-    fn view(mut commands: Commands, asset_server: Res<AssetServer>, query: Query<&Window>) {
+    pub fn new(mut commands: Commands, asset_server: Res<AssetServer>, query: Query<&Window>) {
         let window = query.single();
 
         let bg_image = MenuComponent::background(&asset_server, window);
@@ -50,7 +39,7 @@ impl MenuScreen {
             });
     }
 
-    fn enter_game(
+    pub fn enter_game(
         keyboard_input: Res<Input<KeyCode>>,
         mut startup_state: ResMut<NextState<StartupState>>,
     ) {
@@ -59,7 +48,7 @@ impl MenuScreen {
         }
     }
 
-    fn cleanup(
+    pub fn cleanup(
         mut commands: Commands,
         query: Query<Entity, With<MenuScreen>>,
     ) {

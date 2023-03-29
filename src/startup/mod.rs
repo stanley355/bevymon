@@ -2,9 +2,8 @@ use bevy::app::PluginGroupBuilder;
 use bevy::prelude::*;
 
 mod state;
-mod menu;
+mod menu_screen;
 mod splash;
-mod menu_component;
 
 // Enum that will be used as a global state for the game
 
@@ -15,6 +14,6 @@ impl PluginGroup for StartupPluginGroup {
     fn build(self) -> PluginGroupBuilder {
         PluginGroupBuilder::start::<Self>()
             .add(splash::plugin::SplashPlugin)
-            .add(menu::MenuPlugin)
+            .add(menu_screen::plugin::MenuScreenPlugin)
     }
 }
