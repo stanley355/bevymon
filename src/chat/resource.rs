@@ -2,9 +2,9 @@ use bevy::prelude::Resource;
 
 #[derive(Debug, Resource)]
 pub struct ChatResource {
-    spawn: bool,
-    dialogue_index: usize,
-    dialgoues: Vec<String>,
+    pub spawn: bool,
+    pub dialogue_index: usize,
+    pub dialgoues: Vec<String>,
 }
 
 impl ChatResource {

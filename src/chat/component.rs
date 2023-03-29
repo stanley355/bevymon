@@ -6,7 +6,7 @@ const CHATBOX_SPRITE_TILE_SIZE: Vec2 = Vec2::new(255., 48.);
 pub struct ChatBoxSprite;
 
 impl ChatBoxSprite {
-    fn new(
+    pub fn new(
         asset_server: &Res<AssetServer>,
         mut texture_atlas_res: ResMut<Assets<TextureAtlas>>,
         window: &Window,
@@ -35,7 +35,7 @@ impl ChatBoxSprite {
 pub struct ChatBoxText;
 
 impl ChatBoxText {
-    fn new(asset_server: &Res<AssetServer>, window: &Window, text_value: &str) -> TextBundle {
+    pub fn new(asset_server: &Res<AssetServer>, window: &Window, text_value: &str) -> TextBundle {
         let font: Handle<Font> = asset_server.load("fonts/poke-text.ttf");
 
         let style = Style {
