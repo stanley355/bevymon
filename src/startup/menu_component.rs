@@ -57,12 +57,12 @@ impl MenuComponent {
     }
 
     pub fn title(asset_server: &Res<AssetServer>) -> TextBundle {
-        let font: Handle<Font> = asset_server.load("fonts/poke-solid.ttf");
+        let font: Handle<Font> = asset_server.load("fonts/poke-unown.ttf");
         TextBundle::from_section(
             "War of Origin",
             TextStyle {
                 font: font.clone(),
-                font_size: 120.0,
+                font_size: 80.0,
                 color: Color::WHITE,
             },
         )
@@ -81,7 +81,7 @@ impl MenuComponent {
     }
 
     pub fn cta_text(asset_server: &Res<AssetServer>) -> TextBundle {
-        let font: Handle<Font> = asset_server.load("fonts/april-easter.ttf");
+        let font: Handle<Font> = asset_server.load("fonts/poke-text.ttf");
         TextBundle::from_section(
             "Press Enter to join War",
             TextStyle {
