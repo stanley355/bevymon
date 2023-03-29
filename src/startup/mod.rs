@@ -5,8 +5,6 @@ mod state;
 mod menu_screen;
 mod splash;
 
-// Enum that will be used as a global state for the game
-
 #[derive(Debug)]
 pub struct StartupPluginGroup;
 
