@@ -5,8 +5,6 @@ use bevy_tweening::TweeningPlugin;
 
 mod chat;
 mod startup;
-mod story;
-// mod miscellanous;
 
 fn main() {
     let win_plugin = WindowPlugin {

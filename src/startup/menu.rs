@@ -3,15 +3,13 @@ use bevy_tweening::Animator;
 
 use super::menu_component::MenuComponent;
 use super::StartupState;
-use crate::story::StoryState;
 
 #[derive(Debug)]
 pub struct MenuPlugin;
 
 impl Plugin for MenuPlugin {
     fn build(&self, app: &mut App) {
-        app.add_state::<StoryState>()
-            .add_system(MenuScreen::view.in_schedule(OnEnter(StartupState::Menu)))
+        app.add_system(MenuScreen::view.in_schedule(OnEnter(StartupState::Menu)))
             .add_system(MenuScreen::enter_game.in_set(OnUpdate(StartupState::Menu)))
             .add_system(MenuScreen::cleanup.in_schedule(OnExit(StartupState::Menu)));
     }
@@ -64,11 +62,9 @@ impl MenuScreen {
     fn cleanup(
         mut commands: Commands,
         query: Query<Entity, With<MenuScreen>>,
-        mut story_state: ResMut<NextState<StoryState>>,
     ) {
         let screen = query.single();
         commands.entity(screen).despawn_descendants();
         commands.entity(screen).despawn();
-        story_state.set(StoryState::NewGame);
     }
 }
