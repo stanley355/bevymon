@@ -7,14 +7,14 @@ pub struct TextboxPlugin;
 impl Plugin for TextboxPlugin {
     fn build(&self, app: &mut App) {
         let dummy = vec![
-            "At the start there's creation".to_string(),
+            "At the start there's creation...But where does creation comes from?".to_string(),
             "But where does the creation comes from?".to_string(),
         ];
         let textbox = TextBox::new(true, dummy);
 
         app.insert_resource(textbox)
-            .add_startup_system(TextBox::spawn)
-            .add_system(TextBox::detect_change);
+            .add_startup_system(TextBox::spawn);
+        // .add_system(TextBox::detect_change);
         // TODO: Activate this code once functionality done
         // .add_system(TextBox::spawn.in_schedule(OnEnter(StartupState::InGame)));
     }
@@ -41,7 +41,7 @@ impl TextBox {
         }
     }
 
-    fn bundle(
+    fn sprite_bundle(
         asset_server: &Res<AssetServer>,
         mut texture_atlas_res: ResMut<Assets<TextureAtlas>>,
         window: &Window,
@@ -65,6 +65,33 @@ impl TextBox {
         }
     }
 
+    fn text_value(
+        asset_server: &Res<AssetServer>,
+        text_value: &str,
+        window: &Window,
+    ) -> TextBundle {
+        let font: Handle<Font> = asset_server.load("fonts/poke-text.ttf");
+
+        let style = Style {
+            margin: UiRect {
+                top: Val::Px(window.height() * 0.75),
+                left: Val::Px(window.width() / 5.),
+                ..Default::default()
+            },
+            max_size: Size::width(Val::Px(window.width() / 1.75)),
+            ..Default::default()
+        };
+        TextBundle::from_section(
+            text_value,
+            TextStyle {
+                font: font,
+                font_size: 36.0,
+                color: Color::BLACK,
+            },
+        )
+        .with_style(style)
+    }
+
     fn spawn(
         textbox_res: Res<TextBox>,
         mut commands: Commands,
@@ -76,39 +103,14 @@ impl TextBox {
             let window = window_query.single();
 
             let textbox_name = Name::new("Textbox");
-            let textbox = TextBox::bundle(&asset_server, texture_atlas_res, window);
-            let value = Self::textbox_value(&asset_server, &textbox_res.texts[0], window);
+            let textbox = TextBox::sprite_bundle(&asset_server, texture_atlas_res, window);
 
-            commands.spawn((textbox_name, textbox));
-            // let a = commands.spawn(value).insert(TextBoxValue).id();
-            // println!("{:?}", a);
+            let textvalue_name = Name::new("TextboxValue");
+            let text_value = TextBox::text_value(&asset_server, &textbox_res.texts[0], window);
+
+            commands.spawn((textbox, textbox_name));
+            commands.spawn((text_value, textvalue_name));
         }
-    }
-
-    fn textbox_value(
-        asset_server: &Res<AssetServer>,
-        text_value: &str,
-        window: &Window,
-    ) -> TextBundle {
-        let font: Handle<Font> = asset_server.load("fonts/april-easter.ttf");
-
-        let style = Style {
-            margin: UiRect {
-                top: Val::Px(window.height() * 0.75),
-                left: Val::Px(window.width() / 5.),
-                ..Default::default()
-            },
-            ..Default::default()
-        };
-        TextBundle::from_section(
-            text_value,
-            TextStyle {
-                font: font,
-                font_size: 50.0,
-                color: Color::BLACK,
-            },
-        )
-        .with_style(style)
     }
 
     fn detect_change(
@@ -118,7 +120,7 @@ impl TextBox {
         asset_server: Res<AssetServer>,
         texture_atlas_res: ResMut<Assets<TextureAtlas>>,
         window_query: Query<&Window>,
-        // textbox_value: Query<Entity, With<TextBox>>,
+        textbox_value: Query<Entity, With<TextBoxValue>>,
     ) {
         let pressed_z_or_x = keyboard.pressed(KeyCode::Z) | keyboard.pressed(KeyCode::X);
         if pressed_z_or_x & textbox_res.spawn {
@@ -130,8 +132,9 @@ impl TextBox {
 
             // commands.spawn((textbox_name, textbox));
             // commands.spawn((value, TextBoxValue));
-            // let text_val = textbox_value.single();
-            // commands.get_entity(text_val).unwrap().despawn();
+            let text_val = textbox_value.single();
+            println!("{:?}", text_val);
+            let b = commands.entity(text_val);
         }
     }
 }
