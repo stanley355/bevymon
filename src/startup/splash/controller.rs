@@ -35,7 +35,7 @@ impl SplashScreen {
         }
     }
 
-    pub fn despawn(mut commands: Commands, splash_query: Query<Entity, With<SplashScreen>>) {
+    pub fn despawn(mut commands: Commands, splash_query: Query<Entity, With<SplashBackground>>) {
         let splash_screen = splash_query.single();
         commands.entity(splash_screen).despawn_descendants();
         commands.entity(splash_screen).despawn();
