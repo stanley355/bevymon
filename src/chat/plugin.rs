@@ -1,4 +1,4 @@
-
+use super::resource::ChatResource;
 use super::state::ChatState;
 use bevy::prelude::*;
 
@@ -7,13 +7,9 @@ pub struct TextboxPlugin;
 
 impl Plugin for TextboxPlugin {
     fn build(&self, app: &mut App) {
-        // let dummy = vec![
-        //     "At the start there's creation...".to_string(),
-        //     "But where does the creation comes from?".to_string(),
-        // ];
-        // let textbox = TextBox::new(true, dummy);
+        let chat_resource = ChatResource::new();
 
-        app.add_state::<ChatState>();
+        app.add_state::<ChatState>().insert_resource(chat_resource);
 
         // app.insert_resource(textbox)
         //     .add_startup_system(TextBox::spawn)
