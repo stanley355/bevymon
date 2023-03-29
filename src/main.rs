@@ -3,9 +3,10 @@ use bevy::{core_pipeline::clear_color::ClearColorConfig, prelude::*};
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
 use bevy_tweening::TweeningPlugin;
 
+mod chat;
 mod startup;
 mod story;
-mod miscellanous;
+// mod miscellanous;
 
 fn main() {
     let win_plugin = WindowPlugin {
@@ -26,7 +27,7 @@ fn main() {
         .add_startup_system(camera_setup)
         .add_plugin(TweeningPlugin)
         // .add_plugins(startup::StartupPluginGroup)
-        .add_plugins(miscellanous::MiscellanousPluginGroup)
+        // .add_plugins(miscellanous::MiscellanousPluginGroup)
         // .add_plugins(story::StoryPluginGroup)
         .run();
 }
