@@ -4,5 +4,5 @@ use bevy::prelude::States;
 pub enum ChapterOneState {
     #[default]
     PreChapter,
-    BackgroundStory,
+    BackgroundScene,
 }

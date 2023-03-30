@@ -24,7 +24,7 @@ impl Chat {
         let chattext = ChatBoxText::new(
             &asset_server,
             window,
-            &chat_res.dialgoues[chat_res.dialogue_index],
+            &chat_res.dialogues[chat_res.dialogue_index],
         );
 
         commands
@@ -47,7 +47,7 @@ impl Chat {
         let chattext = ChatBoxText::new(
             &asset_server,
             window,
-            &chat_res.dialgoues[chat_res.dialogue_index],
+            &chat_res.dialogues[chat_res.dialogue_index],
         );
         commands
             .spawn((chattext_name, chattext))
@@ -66,7 +66,7 @@ impl Chat {
         if keyboard.just_pressed(KeyCode::Z) {
             let text_entity = text_query.single();
             commands.entity(text_entity).despawn();
-            if chat_res_mut.dialogue_index < (chat_res_mut.dialgoues.len() - 1) {
+            if chat_res_mut.dialogue_index < (chat_res_mut.dialogues.len() - 1) {
                 chat_res_mut.dialogue_index += 1;
                 Self::new_diagoue(chat_res_mut, commands, asset_server, window_query)
             } else {
@@ -81,6 +81,7 @@ impl Chat {
         box_query: Query<Entity, With<ChatBoxSprite>>,
     ) {
         chat_res_mut.dialogue_index = 0;
+        chat_res_mut.dialogues = vec!["".to_string()];
         let box_entity = box_query.single();
         commands.entity(box_entity).despawn();
     }
