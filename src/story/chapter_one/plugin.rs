@@ -17,6 +17,15 @@ impl Plugin for ChapterOnePlugin {
             )
             .add_system(
                 BackgroundScene::spawn_dialogue_img.in_schedule(OnEnter(BgSceneState::EggImg)),
+            )
+            .add_system(
+                BackgroundScene::spawn_dialogue_img.in_schedule(OnEnter(BgSceneState::MewImg)),
+            )
+            .add_system(
+                BackgroundScene::spawn_dialogue_img.in_schedule(OnEnter(BgSceneState::ArceusImg)),
+            )
+            .add_system(
+                BackgroundScene::spawn_dialogue_img.in_schedule(OnEnter(BgSceneState::CleanupImg)),
             );
     }
 }

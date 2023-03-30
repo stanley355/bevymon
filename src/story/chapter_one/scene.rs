@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 
-use super::state::BgSceneState;
 use super::components::BackgroundSceneSprite;
+use super::state::BgSceneState;
 use crate::chat::{resource::ChatResource, state::ChatState};
 
 #[derive(Debug, Component)]
@@ -28,8 +28,17 @@ impl BackgroundScene {
         old_bg_scene_state: Res<State<BgSceneState>>,
         mut bg_scene_state: ResMut<NextState<BgSceneState>>,
     ) {
-        if chat_res_mut.dialogue_index == 2 && old_bg_scene_state.0 != BgSceneState::EggImg {
+        if chat_res_mut.dialogue_index == 2 && old_bg_scene_state.0 == BgSceneState::NoImg {
             bg_scene_state.set(BgSceneState::EggImg);
+        }
+        if chat_res_mut.dialogue_index == 3 && old_bg_scene_state.0 == BgSceneState::EggImg {
+            bg_scene_state.set(BgSceneState::MewImg);
+        }
+        if chat_res_mut.dialogue_index == 4 && old_bg_scene_state.0 == BgSceneState::MewImg {
+            bg_scene_state.set(BgSceneState::ArceusImg);
+        }
+        if chat_res_mut.dialogue_index == 5 && old_bg_scene_state.0 == BgSceneState::ArceusImg {
+            bg_scene_state.set(BgSceneState::CleanupImg);
         }
     }
 
@@ -37,10 +46,35 @@ impl BackgroundScene {
         bg_scene_state: Res<State<BgSceneState>>,
         mut commands: Commands,
         asset_server: Res<AssetServer>,
+        sprite_query: Query<Entity, With<BackgroundSceneSprite>>,
     ) {
-        if bg_scene_state.0 == BgSceneState::EggImg {
-            let img_bundle = BackgroundSceneSprite::poke_image(&asset_server, "pokemon/egg/egg.png");
-            commands.spawn(img_bundle).insert(BackgroundSceneSprite);
+        match bg_scene_state.0 {
+            BgSceneState::EggImg => {
+                let img_bundle =
+                    BackgroundSceneSprite::poke_image(&asset_server, "pokemon/egg/egg.png");
+                commands.spawn(img_bundle).insert(BackgroundSceneSprite);
+            }
+            BgSceneState::MewImg => {
+                let sprite_entity = sprite_query.single();
+                let img_bundle =
+                    BackgroundSceneSprite::poke_image(&asset_server, "pokemon/mew/mew_shiny.png");
+                commands.entity(sprite_entity).despawn();
+                commands.spawn(img_bundle).insert(BackgroundSceneSprite);
+            }
+            BgSceneState::ArceusImg => {
+                let sprite_entity = sprite_query.single();
+                let img_bundle = BackgroundSceneSprite::poke_image(
+                    &asset_server,
+                    "pokemon/arceus/arceus_shiny.png",
+                );
+                commands.entity(sprite_entity).despawn();
+                commands.spawn(img_bundle).insert(BackgroundSceneSprite);
+            }
+            BgSceneState::CleanupImg => {
+                let sprite_entity = sprite_query.single();
+                commands.entity(sprite_entity).despawn();
+            }
+            _ => (),
         }
     }
 }

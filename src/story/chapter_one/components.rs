@@ -9,7 +9,11 @@ impl BackgroundSceneSprite {
 
         let bundle = ImageBundle {
             style: Style {
-                margin: UiRect::left(Val::Percent(-25.)),
+                margin: UiRect {
+                    left: Val::Percent(-25.),
+                    bottom: Val::Percent(5.),
+                    ..Default::default()
+                },
                 ..Default::default()
             },
             transform: Transform {

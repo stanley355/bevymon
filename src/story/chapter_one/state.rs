@@ -13,6 +13,7 @@ pub enum BgSceneState {
     NoImg,
     EggImg,
     MewImg,
-    ArceusImg
+    ArceusImg,
+    CleanupImg,
 }
 
