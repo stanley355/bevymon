@@ -2,6 +2,7 @@ use bevy::prelude::*;
 use bevy_tweening::Animator;
 
 use crate::startup::state::StartupState;
+use crate::story::{state::StoryState, chapter_one::state::ChapterOneState};
 use super::components::MenuScreenComponent;
 
 #[derive(Debug, Component)]
@@ -42,9 +43,14 @@ impl MenuScreen {
     pub fn enter_game(
         keyboard_input: Res<Input<KeyCode>>,
         mut startup_state: ResMut<NextState<StartupState>>,
+        mut story_state: ResMut<NextState<StoryState>>,
+        mut chapter_state: ResMut<NextState<ChapterOneState>>,
     ) {
         if keyboard_input.pressed(KeyCode::Return) {
             startup_state.set(StartupState::InGame);
+            // TODO: Move this to new game button
+            story_state.set(StoryState::ChapterOne);
+            chapter_state.set(ChapterOneState::BackgroundScene);
         }
     }
 
