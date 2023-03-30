@@ -25,9 +25,9 @@ fn main() {
         .add_plugin(WorldInspectorPlugin::new())
         .add_startup_system(camera_setup)
         .add_plugin(TweeningPlugin)
-        .add_plugins(startup::StartupPluginGroup)
         .add_plugin(chat::plugin::ChatPlugin)
         .add_plugins(story::plugin::StoryPluginGroup)
+        .add_plugins(startup::StartupPluginGroup)
         .run();
 }
 
