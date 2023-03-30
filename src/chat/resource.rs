@@ -12,7 +12,7 @@ impl ChatResource {
         ChatResource {
             spawn: false,
             dialogue_index: 0,
-            dialgoues: vec!["".to_string()],
+            dialgoues: vec!["Add the start there's creation".to_string()],
         }
     }
 }
