@@ -24,7 +24,7 @@ fn main() {
         .add_plugin(WorldInspectorPlugin::new())
         .add_startup_system(camera_setup)
         .add_plugin(TweeningPlugin)
-        // .add_plugins(startup::StartupPluginGroup)
+        .add_plugins(startup::StartupPluginGroup)
         .add_plugin(chat::plugin::ChatPlugin)
         .run();
 }
@@ -45,7 +45,7 @@ fn camera_setup(mut commands: Commands, query: Query<&Window>) {
     let bundle = Camera2dBundle {
         camera,
         camera_2d: Camera2d {
-            clear_color: ClearColorConfig::Custom(Color::WHITE),
+            clear_color: ClearColorConfig::Custom(Color::BLACK),
             ..default()
         },
         ..default()
