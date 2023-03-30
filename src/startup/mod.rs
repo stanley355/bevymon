@@ -1,7 +1,7 @@
 use bevy::app::PluginGroupBuilder;
 use bevy::prelude::*;
 
-mod state;
+pub mod state;
 mod menu_screen;
 mod splash;
 
