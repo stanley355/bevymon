@@ -4,7 +4,7 @@ use bevy::prelude::States;
 pub enum ChapterOneState {
     #[default]
     PreChapter,
-    BackgroundScene,
+    OpeningScene,
 }
 
 #[derive(Clone, Copy, Default, Eq, PartialEq, Debug, Hash, States)]
