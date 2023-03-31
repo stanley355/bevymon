@@ -25,6 +25,10 @@ impl Plugin for OpeningScenePlugin {
             )
             .add_system(
                 OpeningScene::spawn_dialogue_img
+                    .in_schedule(OnEnter(OpeningSceneState::WorldMapImg)),
+            )
+            .add_system(
+                OpeningScene::spawn_dialogue_img
                     .in_schedule(OnEnter(OpeningSceneState::CleanupImg)),
             );
     }

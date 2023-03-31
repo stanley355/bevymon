@@ -47,6 +47,9 @@ impl OpeningScene {
         if chat_res_mut.dialogue_index == 7 && current_scene.0 == OpeningSceneState::CleanupImg{
             next_scene.set(OpeningSceneState::WorldMapImg);
         }
+        if chat_res_mut.dialogue_index == 8 && current_scene.0 == OpeningSceneState::WorldMapImg{
+            next_scene.set(OpeningSceneState::CleanupImg);
+        }
     }
 
     pub fn spawn_dialogue_img(
@@ -72,6 +75,11 @@ impl OpeningScene {
                 let img_bundle =
                     OpeningSceneSprite::new(&asset_server, "pokemon/arceus/arceus_shiny.png");
                 commands.entity(sprite_entity).despawn();
+                commands.spawn(img_bundle).insert(OpeningSceneSprite);
+            }
+            OpeningSceneState::WorldMapImg => {
+                let img_bundle =
+                    OpeningSceneSprite::world_map(&asset_server);
                 commands.spawn(img_bundle).insert(OpeningSceneSprite);
             }
             OpeningSceneState::CleanupImg => {
