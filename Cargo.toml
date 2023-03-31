@@ -17,4 +17,5 @@ opt-level = 3
 [dependencies]
 bevy = { version = "0.10.0", features = ["dynamic_linking"] }
 bevy-inspector-egui = "0.18.1"
+bevy_kira_audio = "0.15.0"
 bevy_tweening = "0.7.0"

@@ -1,6 +1,7 @@
 use bevy::render::camera::Viewport;
 use bevy::{core_pipeline::clear_color::ClearColorConfig, prelude::*};
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
+use bevy_kira_audio::prelude::AudioPlugin;
 use bevy_tweening::TweeningPlugin;
 
 mod chat;
@@ -24,6 +25,7 @@ fn main() {
         .add_plugins(DefaultPlugins.set(win_plugin)) // prevent blurry sprite
         .add_plugin(WorldInspectorPlugin::new())
         .add_startup_system(camera_setup)
+        .add_plugin(AudioPlugin)
         .add_plugin(TweeningPlugin)
         .add_plugins(story::plugin::StoryPluginGroup)
         .add_plugin(chat::plugin::ChatPlugin)
