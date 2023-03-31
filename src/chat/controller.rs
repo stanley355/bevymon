@@ -1,4 +1,5 @@
 use bevy::prelude::*;
+use bevy_kira_audio::prelude::Audio;
 
 use super::components::*;
 use super::resource::ChatResource;
@@ -62,8 +63,10 @@ impl Chat {
         text_query: Query<Entity, With<ChatBoxText>>,
         asset_server: Res<AssetServer>,
         window_query: Query<&Window>,
+        audio: Res<Audio>
     ) {
         if keyboard.just_pressed(KeyCode::Z) {
+            ChatBoxText::play_btn_audio(&asset_server, audio);
             let text_entity = text_query.single();
             commands.entity(text_entity).despawn();
             if chat_res_mut.dialogue_index < (chat_res_mut.dialogues.len() - 1) {

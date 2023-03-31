@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 use bevy_tweening::Animator;
-use bevy_kira_audio::prelude::Audio;
+use bevy_kira_audio::prelude::{Audio, *};
 
 use crate::startup::state::StartupState;
 use crate::story::{state::StoryState, chapter_one::state::ChapterOneState};
@@ -60,7 +60,9 @@ impl MenuScreen {
     pub fn cleanup(
         mut commands: Commands,
         query: Query<Entity, With<MenuScreen>>,
+        audio: Res<Audio>
     ) {
+        audio.stop();
         let screen = query.single();
         commands.entity(screen).despawn_descendants();
         commands.entity(screen).despawn();

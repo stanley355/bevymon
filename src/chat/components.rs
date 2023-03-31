@@ -1,4 +1,5 @@
 use bevy::prelude::*;
+use bevy_kira_audio::prelude::{*, Audio};
 
 const CHATBOX_SPRITE_TILE_SIZE: Vec2 = Vec2::new(255., 48.);
 
@@ -56,5 +57,9 @@ impl ChatBoxText {
             },
         )
         .with_style(style)
+    }
+
+    pub fn play_btn_audio(asset_server: &Res<AssetServer>, audio: Res<Audio>) {
+        audio.play(asset_server.load("audio/button_click.ogg"));
     }
 }
