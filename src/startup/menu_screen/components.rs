@@ -1,6 +1,7 @@
 
 use std::time::Duration;
 
+use bevy_kira_audio::prelude::{*, Audio};
 use bevy::prelude::*;
 use bevy_tweening::{lens::*, *};
 
@@ -91,5 +92,9 @@ impl MenuScreenComponent {
                 color: Color::WHITE,
             },
         )
+    }
+
+    pub fn play_menu_audio(asset_server: &Res<AssetServer>, audio: Res<Audio>) {
+        audio.play(asset_server.load("audio/menu_audio.ogg")).looped();
     }
 }

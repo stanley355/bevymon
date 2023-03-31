@@ -1,5 +1,6 @@
 use bevy::prelude::*;
 use bevy_tweening::Animator;
+use bevy_kira_audio::prelude::Audio;
 
 use crate::startup::state::StartupState;
 use crate::story::{state::StoryState, chapter_one::state::ChapterOneState};
@@ -9,7 +10,7 @@ use super::components::MenuScreenComponent;
 pub struct MenuScreen;
 
 impl MenuScreen {
-    pub fn new(mut commands: Commands, asset_server: Res<AssetServer>, query: Query<&Window>) {
+    pub fn new(mut commands: Commands, asset_server: Res<AssetServer>, query: Query<&Window>, audio: Res<Audio>) {
         let window = query.single();
 
         let bg_image = MenuScreenComponent::background(&asset_server, window);
@@ -23,6 +24,8 @@ impl MenuScreen {
         let cta_text = MenuScreenComponent::cta_text(&asset_server);
 
         let cta_animation = Animator::new(MenuScreenComponent::cta_text_animation());
+
+        MenuScreenComponent::play_menu_audio(&asset_server, audio);
 
         commands
             .spawn((bg_image, bg_name, MenuScreen))
