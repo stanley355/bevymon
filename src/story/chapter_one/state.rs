@@ -5,4 +5,5 @@ pub enum ChapterOneState {
     #[default]
     PreChapter,
     OpeningScene,
+    Introduction
 }

@@ -2,7 +2,7 @@ use bevy::prelude::*;
 
 use super::components::OpeningSceneSprite;
 use super::state::OpeningSceneState;
-use crate::chat::{resource::ChatResource, state::ChatState};
+use crate::{chat::{resource::ChatResource, state::ChatState}, story::chapter_one::state::ChapterOneState};
 
 #[derive(Debug, Component)]
 pub struct OpeningScene;
@@ -28,27 +28,24 @@ impl OpeningScene {
     }
 
     pub fn spawn_img_detection(
+        keyboard: Res<Input<KeyCode>>,
         chat_res_mut: ResMut<ChatResource>,
         current_scene: Res<State<OpeningSceneState>>,
         mut next_scene: ResMut<NextState<OpeningSceneState>>,
+        mut next_chap_one_state: ResMut<NextState<ChapterOneState>>,
     ) {
-        if chat_res_mut.dialogue_index == 2 && current_scene.0 == OpeningSceneState::NoImg {
-            next_scene.set(OpeningSceneState::EggImg);
+        match (chat_res_mut.dialogue_index, current_scene.0) {
+            (2, OpeningSceneState::NoImg) =>  next_scene.set(OpeningSceneState::EggImg),
+            (3, OpeningSceneState::EggImg) => next_scene.set(OpeningSceneState::MewImg),
+            (4, OpeningSceneState::MewImg) => next_scene.set(OpeningSceneState::ArceusImg),
+            (5, OpeningSceneState::ArceusImg) => next_scene.set(OpeningSceneState::CleanupImg),
+            (7, OpeningSceneState::CleanupImg) => next_scene.set(OpeningSceneState::WorldMapImg),
+            (8, OpeningSceneState::WorldMapImg) => next_scene.set(OpeningSceneState::CleanupImg),
+            _ => ()
         }
-        if chat_res_mut.dialogue_index == 3 && current_scene.0 == OpeningSceneState::EggImg {
-            next_scene.set(OpeningSceneState::MewImg);
-        }
-        if chat_res_mut.dialogue_index == 4 && current_scene.0 == OpeningSceneState::MewImg {
-            next_scene.set(OpeningSceneState::ArceusImg);
-        }
-        if chat_res_mut.dialogue_index == 5 && current_scene.0 == OpeningSceneState::ArceusImg {
-            next_scene.set(OpeningSceneState::CleanupImg);
-        }
-        if chat_res_mut.dialogue_index == 7 && current_scene.0 == OpeningSceneState::CleanupImg{
-            next_scene.set(OpeningSceneState::WorldMapImg);
-        }
-        if chat_res_mut.dialogue_index == 8 && current_scene.0 == OpeningSceneState::WorldMapImg{
-            next_scene.set(OpeningSceneState::CleanupImg);
+
+        if chat_res_mut.dialogue_index == 9 && keyboard.just_pressed(KeyCode::Z) {
+            next_chap_one_state.set(ChapterOneState::Introduction);
         }
     }
 
