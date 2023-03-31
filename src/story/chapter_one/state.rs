@@ -6,14 +6,3 @@ pub enum ChapterOneState {
     PreChapter,
     OpeningScene,
 }
-
-#[derive(Clone, Copy, Default, Eq, PartialEq, Debug, Hash, States)]
-pub enum BgSceneState {
-    #[default]
-    NoImg,
-    EggImg,
-    MewImg,
-    ArceusImg,
-    CleanupImg,
-}
-

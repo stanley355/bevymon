@@ -50,7 +50,7 @@ impl MenuScreen {
             startup_state.set(StartupState::InGame);
             // TODO: Move this to new game button
             story_state.set(StoryState::ChapterOne);
-            chapter_state.set(ChapterOneState::BackgroundScene);
+            chapter_state.set(ChapterOneState::OpeningScene);
         }
     }
 
