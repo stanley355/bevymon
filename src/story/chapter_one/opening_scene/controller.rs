@@ -15,10 +15,14 @@ impl OpeningScene {
         chat_res_mut.dialogues = vec![
             "At the beginning there was creation".to_string(),
             "But where does creation comes from?".to_string(),
-            "Some said it started from egg".to_string(),
-            "Some said it started from Mew".to_string(),
-            "Some said it started from Arceus".to_string(),
+            "Some said it started from egg,".to_string(),
+            "Some said it started from Mew,".to_string(),
+            "Some said it started from Arceus.".to_string(),
             "Nobody knows...".to_string(),
+            "But that creation has become what we know as the three kingdoms...".to_string(),
+            "Hespera, Kalypso, and Anthea.".to_string(),
+            "Why do they wage the war? What do they strive for?".to_string(),
+            "It's your journey to unfold.".to_string()
         ];
         chat_state.set(ChatState::OnChat);
     }
@@ -39,6 +43,9 @@ impl OpeningScene {
         }
         if chat_res_mut.dialogue_index == 5 && current_scene.0 == OpeningSceneState::ArceusImg {
             next_scene.set(OpeningSceneState::CleanupImg);
+        }
+        if chat_res_mut.dialogue_index == 7 && current_scene.0 == OpeningSceneState::CleanupImg{
+            next_scene.set(OpeningSceneState::WorldMapImg);
         }
     }
 
