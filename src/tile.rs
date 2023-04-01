@@ -11,14 +11,15 @@ impl Tile {
         asset_server: Res<AssetServer>,
         mut texture_atlas_res: ResMut<Assets<TextureAtlas>>,
     ) -> Handle<TextureAtlas> {
-        let player_sprites: Handle<Image> = asset_server.load("tiles.png");
+        let player_sprites: Handle<Image> = asset_server.load("images/tiles/dis_world_tiles.png");
         let texture_atlas = TextureAtlas::from_grid(
             player_sprites,
-            Vec2::new(16.0, 16.0),
-            4,
-            1,
+            Vec2::new(20.0, 20.0),
+            9,
+            2,
             None,
-            Some(Vec2::new(6.0, 64.0)),
+            None,
+            // Some(Vec2::new(6.0, 64.0)),
         );
         return texture_atlas_res.add(texture_atlas);
     }
@@ -39,7 +40,7 @@ impl Tile {
                 };
                 commands.spawn((SpriteSheetBundle {
                     texture_atlas: texture_atlas.clone(),
-                    sprite: TextureAtlasSprite::new(0),
+                    sprite: TextureAtlasSprite::new(8),
                     transform: transform,
                     ..default()
                 },));
