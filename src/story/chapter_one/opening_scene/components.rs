@@ -33,14 +33,14 @@ impl OpeningSceneSprite {
         let bundle = ImageBundle {
             style: Style {
                 margin: UiRect {
-                    left: Val::Percent(-75.),
-                    bottom: Val::Percent(5.),
+                    left: Val::Percent(-80.),
+                    bottom: Val::Percent(10.),
                     ..Default::default()
                 },
                 ..Default::default()
             },
             transform: Transform {
-                scale: Vec3::new(0.5, 0.5, 0.),
+                scale: Vec3::new(0.5, 0.75, 0.),
                 ..Default::default()
             },
             image: UiImage::new(background),
