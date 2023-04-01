@@ -10,7 +10,7 @@ pub struct MenuScreenComponent;
 
 impl MenuScreenComponent {
     pub fn background(asset_server: &Res<AssetServer>, window: &Window) -> ImageBundle {
-        let background = asset_server.load("images/war_bg.png");
+        let background = asset_server.load("images/screen/war_bg.png");
         let size = Size::new(Val::Px(window.width()), Val::Px(window.height()));
 
         let bundle = ImageBundle {

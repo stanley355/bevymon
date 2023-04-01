@@ -5,7 +5,7 @@ pub struct SplashBackground;
 
 impl SplashBackground {
     pub fn new(asset_server: &Res<AssetServer>, window: &Window) -> ImageBundle {
-        let splash_img = asset_server.load("images/splash.png");
+        let splash_img = asset_server.load("images/screen/splash.png");
         let size = Size::new(Val::Px(window.width()), Val::Px(window.height()));
 
         ImageBundle {
