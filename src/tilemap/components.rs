@@ -15,19 +15,16 @@ impl Tile {
         return texture_atlas_res.add(texture_atlas);
     }
 
-    pub fn spawn(
-        mut commands: Commands,
+    pub fn bundle(
         texture_atlas: Handle<TextureAtlas>,
         sprite_index: usize,
         transform: Transform,
-    ) {
-        let bundle = SpriteSheetBundle {
+    ) -> SpriteSheetBundle {
+        SpriteSheetBundle {
             texture_atlas: texture_atlas.clone(),
             sprite: TextureAtlasSprite::new(sprite_index),
             transform,
             ..default()
-        };
-
-        commands.spawn(bundle);
+        }
     }
 }
