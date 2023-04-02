@@ -28,9 +28,10 @@ fn main() {
         .add_startup_system(camera_setup)
         .add_plugin(AudioPlugin)
         .add_plugin(TweeningPlugin)
-        .add_plugins(story::plugin::StoryPluginGroup)
-        .add_plugin(chat::plugin::ChatPlugin)
-        .add_plugins(startup::StartupPluginGroup)
+        .add_plugin(tilemap::plugin::TileMapPlugin)
+        // .add_plugins(story::plugin::StoryPluginGroup)
+        // .add_plugin(chat::plugin::ChatPlugin)
+        // .add_plugins(startup::StartupPluginGroup)
         .run();
 }
 
