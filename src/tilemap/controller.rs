@@ -22,7 +22,7 @@ impl TileMap {
         for (y, line) in BufReader::new(file).lines().enumerate() {
             if let Ok(line) = line {
                 for (x, char) in line.chars().enumerate() {
-                    println!("{:?}", x);
+                    println!("{:?}", char);
                     let transform = Transform::from_xyz(x as f32 * 20., y as f32, 1.0);
 
                     let bundle = Tile::bundle(tile_atlas.clone(), 3, transform);
